@@ -1,3 +1,4 @@
+using ASP.NET_API.Helpers;
 using ASP.NET_API.Repositories;
 using ASP.NET_API.Repositories.Impl;
 using ASP.NET_API.Services;
@@ -10,7 +11,7 @@ using MongoDB.Bson.Serialization.Serializers;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configure geting and inserting Guid for MongoDB
+// Configure getting and inserting Guid for MongoDB
 #pragma warning disable CS0618
 BsonDefaults.GuidRepresentation = GuidRepresentation.Standard;
 BsonDefaults.GuidRepresentationMode = GuidRepresentationMode.V3;
@@ -37,7 +38,7 @@ builder.Services.AddControllers().AddJsonOptions(
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
-    options.SwaggerDoc("v1", new OpenApiInfo { Title = "Simple API exemple", Version = "v0.1" });
+    options.SwaggerDoc("v1", new OpenApiInfo { Title = "Simple API example", Version = "v0.2" });
 
 });
 
@@ -50,7 +51,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
+
+app.UseMiddleware<MiddlewareExceptions>();
 
 app.UseCors(x => x
                 .AllowAnyOrigin()

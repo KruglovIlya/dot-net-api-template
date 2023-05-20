@@ -1,4 +1,3 @@
-using ASP.NET_API.Exceptions;
 using ASP.NET_API.Models.Post;
 using ASP.NET_API.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -31,16 +30,9 @@ namespace ASP.NET_API.Controllers
         [HttpPost]
         public async Task<ActionResult<PostDto>> CreatePost(PostDto createPost)
         {
-            try
-            {
-                var post = await _newsService.AddPostAsync(createPost);
+            var post = await _newsService.AddPostAsync(createPost);
 
-                return post;
-            }
-            catch (CommonApiUserException ex)
-            {
-                return BadRequest(new { errorText = ex.Message });
-            }
+            return post;
         }
     }
 }
